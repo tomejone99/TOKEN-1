@@ -97,6 +97,6 @@ else
 	print_logo
 	th3boss
 	logo_play
-	green " TH3BOSS V18 Bot running..."
+	green " 🌟| جـاري تـشـغـيـل سـورس الـزعـيـم الاصـدار 19 ...."
 	lua ./bot/bot.lua
 fi
