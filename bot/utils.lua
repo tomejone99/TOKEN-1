@@ -1,5 +1,4 @@
--- BY @TH3BOSS
--- BY @lBOSSl
+
  local clock = os.clock
 function sleep(time)  -- seconds
   local t0 = clock()
@@ -64,7 +63,6 @@ end
 --  Saves file to /tmp/. If file_name isn't provided,
 -- will get the text after the last "/" for filename
 -- do ski
-msg_caption = '\n@'..string.reverse("maeTdnoyeB")
 -- Waiting for ski:)
 -- and content-type for extension
 function download_to_file(url, file_name)
@@ -96,8 +94,8 @@ function download_to_file(url, file_name)
 
   file_name = file_name or get_http_file_name(url, headers)
 
-  local file_path = "download_path/"..file_name
-  -- print("Saved to: "..file_path)
+  local file_path = "data/"..file_name
+   print("Saved to: "..file_path)
 	-- uncomment if needed
   file = io.open(file_path, "w+")
   file:write(table.concat(respbody))
@@ -235,12 +233,6 @@ function is_owner(msg)
     end
   end
 
-  for v,user in pairs(_config.admins) do
-    if user[1] == msg.from.id then
-      var = true
-  end
-end
-
   for v,user in pairs(_config.sudo_users) do
     if user == msg.from.id then
         var = true
@@ -249,22 +241,6 @@ end
   return var
 end
 
-function is_admin(msg)
-  local var = false
-  local user = msg.from.id
-  for v,user in pairs(_config.admins) do
-    if user[1] == msg.from.id then
-      var = true
-  end
-end
-
-  for v,user in pairs(_config.sudo_users) do
-    if user == msg.from.id then
-        var = true
-    end
-  end
-  return var
-end
 
 --Check if user is the mod of that group or not
 function is_mod(msg)
@@ -287,11 +263,6 @@ function is_mod(msg)
     end
   end
 
-  for v,user in pairs(_config.admins) do
-    if user[1] == msg.from.id then
-      var = true
-  end
-end
 
   for v,user in pairs(_config.sudo_users) do
     if user == msg.from.id then
@@ -324,11 +295,6 @@ function is_owner1(chat_id, user_id)
     end
   end
 
-  for v,user in pairs(_config.admins) do
-    if user[1] == user_id then
-      var = true
-  end
-end
 
   for v,user in pairs(_config.sudo_users) do
     if user == user_id then
@@ -338,22 +304,8 @@ end
   return var
 end
 
-function is_admin1(user_id)
-  local var = false
-  local user = user_id
-  for v,user in pairs(_config.admins) do
-    if user[1] == user_id then
-      var = true
-  end
-end
 
-  for v,user in pairs(_config.sudo_users) do
-    if user == user_id then
-        var = true
-    end
-  end
-  return var
-end
+
 
 --Check if user is the mod of that group or not
 function is_mod1(chat_id, user_id)
@@ -376,11 +328,7 @@ function is_mod1(chat_id, user_id)
     end
   end
 
-  for v,user in pairs(_config.admins) do
-    if user[1] == user_id then
-      var = true
-  end
-end
+
 
   for v,user in pairs(_config.sudo_users) do
     if user == user_id then
@@ -455,15 +403,6 @@ function is_gbanned(user_id)
 return var
 end
 
-function is_BDChannel_member(user_id, chat_id, msg_id)
-local var = true
-local getmember = getChatMember(BeyondTeam, user_id).result
-local is_not_member = getmember.status == "left" or getmember.status == "kicked"
-    if is_not_member and not is_admin1(user_id) then
-    var = false
-       end
-    return var
-end
 
 function ban_user(user_name, user_id, chat_id)
     local data = load_data(_config.moderation.data)
@@ -526,33 +465,22 @@ if not is_gbanned(user_id) then
   data['gban_users'][tostring(user_id)] = nil
     save_data(_config.moderation.data, data)
   end
--- BY @TH3BOSS
 -- BY @lBOSSl
+
  function banned_list(chat_id)
-local hash = "group_lang:"..chat_id
-local lang = redis:get(hash)
+
     local data = load_data(_config.moderation.data)
     local i = 1
   if not data[tostring(chat_id)] then
-     if not lang then
-    return '_Group is not added_'
-else
-    return  "ðŸŒŸ| _Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ù‡ Ù„ÙŠØ³Øª Ù…Ù† Ø­Ù…Ø§ÙŠØªÙŠ â˜‘ï¸ï¸_"
-   end
+    return '*🌟|   المجموعه ليست مضافه*'
   end
   -- determine if table is empty
   if next(data[tostring(chat_id)]['banned']) == nil then --fix way
-			 if not lang then
-					return "_No_ *banned* _users in this group_"
-					else
-					return "*ðŸŒŸ|  Ù„Ø§ÙŠÙˆØ¬Ø¯ Ø£Ø¹Ø¶Ø§Ø¡ Ù…Ø­Ø¸ÙˆØ±ÙŠÙ† ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ù‡*"
-              end
+					return "*🌟|   لايوجد أعضاء محظورين في هذه المجموعه*"
+
 				end
-   if not lang then
-   message = '*List of banned users :*\n'
-         else
-   message = '_ðŸŒŸ|  Ù‚Ø§Ø¦Ù…Ù‡ Ø§Ù„Ø§Ø¹Ø¶Ø§Ø¡ Ø§Ù„Ù…Ø­Ø¸ÙˆØ±ÙŠÙ† :_\n'
-     end
+   message = '🌟|  _ قائمه الاعضاء المحظورين :_\n'
+
   for k,v in pairs(data[tostring(chat_id)]['banned']) do
     message = message ..i.. '- '..v..' [' ..k.. '] \n'
    i = i + 1
@@ -561,30 +489,18 @@ end
 end
 
  function silent_users_list(chat_id)
-local hash = "group_lang:"..chat_id
-local lang = redis:get(hash)
+
     local data = load_data(_config.moderation.data)
     local i = 1
   if not data[tostring(chat_id)] then
-    if not lang then
-    return '_Group is not added_'
-else
-    return  "ðŸŒŸ| _Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ù‡ Ù„ÙŠØ³Øª Ù…Ù† Ø­Ù…Ø§ÙŠØªÙŠ â˜‘ï¸ï¸_"
-   end
+    return '*🌟|   المجموعه ليست مضافه*'
   end
   -- determine if table is empty
   if next(data[tostring(chat_id)]['is_silent_users']) == nil then --fix way
-					if not lang then
-					return "_No_ *silent* _users in this group_"
-					else
-					return "*ðŸŒŸ|  Ù„Ø§ÙŠÙˆØ¬Ø¯ Ø§Ø¹Ø¶Ø§Ø¡ Ù…ÙƒØªÙˆÙ…ÙŠÙ† ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ù‡*"
-             end
-				end
-   if not lang then
-   message = '*List of silent users :*\n'
-       else
-   message = '_ðŸŒŸ|  Ù‚Ø§Ø¦Ù…Ù‡ Ø§Ù„Ø§Ø¹Ø¶Ø§Ø¡ Ø§Ù„Ù…ÙƒØªÙˆÙ…ÙŠÙ† :_\n'
-    end
+					return "*🌟|   لايوجد اعضاء مكتومين في هذه المجموعه*"
+end
+   message = '🌟|  _ قائمه الاعضاء المكتومين :_\n'
+
   for k,v in pairs(data[tostring(chat_id)]['is_silent_users']) do
     message = message ..i.. '- '..v..' [' ..k.. '] \n'
    i = i + 1
@@ -593,16 +509,11 @@ end
 end
 
 function whitelist(chat_id)
-local hash = "group_lang:"..chat_id
-local lang = redis:get(hash)
+
     local data = load_data(_config.moderation.data)
     local i = 1
   if not data[tostring(chat_id)] then
-     if not lang then
-    return '_Group is not added_'
-else
-    return  "ðŸŒŸ| _Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ù‡ Ù„ÙŠØ³Øª Ù…Ù† Ø­Ù…Ø§ÙŠØªÙŠ â˜‘ï¸ï¸_"
-   end
+    return '*🌟|   المجموعه ليست مضافه*'
   end
   if not data[tostring(chat_id)]['whitelist'] then
     data[tostring(chat_id)]['whitelist'] = {}
@@ -610,17 +521,10 @@ else
     end
   -- determine if table is empty
   if next(data[tostring(chat_id)]['whitelist']) == nil then --fix way
-					if not lang then
-					return "_No_ *users* _in white list_"
-					else
-     return "*ðŸŒŸ|  Ù„Ø§ÙŠÙˆØ¬Ø¯ Ø§Ø¹Ø¶Ø§Ø¡ Ù…Ù…ÙŠØ²ÙŠÙ† Ø¶Ù…Ù† Ø§Ù„Ù‚Ø§Ø¦Ù…Ù‡ ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ù‡*"
-              end
-				end
-   if not lang then
-   message = '*Users of white list :*\n'
-         else
-   message = '_ðŸŒŸ|  Ù‚Ø§Ø¦Ù…Ù‡ Ø§Ù„Ø§Ø¹Ø¶Ø§Ø¡ Ø§Ù„Ù…Ù…ÙŠØ²ÙŠÙ† :_\n'
-     end
+     return "*🌟|   لايوجد اعضاء مميزين ضمن القائمه في هذه المجموعه*"
+end
+   message = '🌟|  _ قائمه الاعضاء المميزين :_\n'
+
   for k,v in pairs(data[tostring(chat_id)]['whitelist']) do
     message = message ..i.. '- '..v..' [' ..k.. '] \n'
    i = i + 1
@@ -629,8 +533,7 @@ end
 end
 
  function gbanned_list(msg)
-local hash = "group_lang:"..msg.to.id
-local lang = redis:get(hash)
+
     local data = load_data(_config.moderation.data)
     local i = 1
   if not data['gban_users'] then
@@ -638,17 +541,9 @@ local lang = redis:get(hash)
     save_data(_config.moderation.data, data)
   end
   if next(data['gban_users']) == nil then --fix way
-			if not lang then
-					return "_No_ *globally banned* _users available_"
-						else
-					return "*ðŸŒŸ|  Ù„Ø§ÙŠÙˆØ¬Ø¯ Ø§Ø¹Ø¶Ø§Ø¡ Ù…Ø­Ø¸ÙˆØ±ÙŠÙ† Ø¹Ø§Ù…*"
-             end
-				end
-   if not lang then
-   message = '*List of globally banned users :*\n'
-   else
-   message = '_ðŸŒŸ|  Ù‚Ø§Ø¦Ù…Ù‡ Ø§Ù„Ù…Ø­Ø¸ÙˆØ±ÙŠÙ† Ø¹Ø§Ù… :_\n'
-   end
+					return "*🌟|   لايوجد اعضاء محظورين عام*"
+end
+   message = '🌟|  _ قائمه المحظورين عام :_\n'
   for k,v in pairs(data['gban_users']) do
     message = message ..i.. '- '..v..' [' ..k.. '] \n'
    i = i + 1
@@ -657,37 +552,23 @@ end
 end
 
  function filter_list(msg)
-local hash = "group_lang:"..msg.to.id
-local lang = redis:get(hash)
     local data = load_data(_config.moderation.data)
   if not data[tostring(msg.chat.id)]['filterlist'] then
     data[tostring(msg.chat.id)]['filterlist'] = {}
     save_data(_config.moderation.data, data)
     end
   if not data[tostring(msg.chat.id)] then
-    if not lang then
-    return '_Group is not added_'
-else
-    return  "ðŸŒŸ| _Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ù‡ Ù„ÙŠØ³Øª Ù…Ù† Ø­Ù…Ø§ÙŠØªÙŠ â˜‘ï¸ï¸_"
-   end
+    return '*🌟|   المجموعه ليست مضافه*'
   end
   -- determine if table is empty
   if next(data[tostring(msg.chat.id)]['filterlist']) == nil then --fix way
-    if not lang then
-    return "*Filtered words list* _is empty_"
-      else
-    return "_ðŸŒŸ|  Ù‚Ø§Ø¦Ù…Ù‡ Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ù…Ù…Ù†ÙˆØ¹Ù‡ ÙØ§Ø±ØºÙ‡_"
-     end
+    return "🌟|   _قائمه الكلمات الممنوعه فارغه_"
   end
   if not data[tostring(msg.chat.id)]['filterlist'] then
     data[tostring(msg.chat.id)]['filterlist'] = {}
     save_data(_config.moderation.data, data)
     end
-       if not lang then
-       filterlist = '*List of filtered words :*\n'
-         else
-       filterlist = '_ðŸŒŸ|  Ù‚Ø§Ø¦Ù…Ù‡ Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ù…Ù…Ù†ÙˆØ¹Ù‡ :_\n'
-    end
+       filterlist = '🌟|  _ قائمه الكلمات الممنوعه :_\n'
  local i = 1
    for k,v in pairs(data[tostring(msg.chat.id)]['filterlist']) do
               filterlist = filterlist..'*'..i..'* - _'..check_markdown(k)..'_\n'
@@ -695,7 +576,7 @@ else
          end
      return filterlist
    end
--- @TH3BOSS
+-- @lBOSSl
 -- @lBOSSl
 function get_var_inline(msg)
 if msg.query then
@@ -708,6 +589,14 @@ msg.chat.id = msg.chat.id
 end
 match_plugins(msg)
 end
+function get_vare(message)
+  if not message then
+    edited_message = false
+    else
+    edited_message = true
+    end
+  end
+  
 function get_var(msg)
  msg.data = {}
 msg.to = {}
