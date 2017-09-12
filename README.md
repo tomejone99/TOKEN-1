@@ -21,8 +21,6 @@
 🔸➖🔹➖🔸➖🔹
 # Let's Install The Bot >>
 🔸➖🔹➖🔸➖🔹
-cd $HOME
-🔸➖🔹➖🔸➖🔹
 git clone https://github.com/moody2020/TOKEN.git
 🔸➖🔹➖🔸➖🔹
 cd TOKEN
@@ -59,11 +57,10 @@ screen ./autobd.sh
 ### One command
 To install everything in one command, use:
 ```sh
-cd $HOME && git clone https://github.com/moody2020/TOKEN.git && cd TOKEN && chmod +x TOKEN.sh && ./TOKEN.sh install && ./TOKEN.sh
+ git clone https://github.com/moody2020/TOKEN.git && cd TOKEN && chmod +x TOKEN.sh && ./TOKEN.sh install && ./TOKEN.sh
 
 OR
-
-cd $HOME && git clone https://github.com/moody2020/TOKEN.git && cd TOKEN && chmod +x TOKEN.sh && ./TOKEN.sh install && chmod 777 autobd.sh && screen ./autobd.sh
+git clone https://github.com/moody2020/TOKEN.git && cd TOKEN && chmod +x TOKEN.sh && ./TOKEN.sh install && chmod 777 autobd.sh && screen ./autobd.sh
 ```
 
 * * *
